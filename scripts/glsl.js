@@ -15,6 +15,7 @@ function glslCreateShaderProgram(gl, vert_source, frag_source) {
     return program;
 }
 
+
 function glslLinkShaderProgram(gl, program) {
     // Link GPU program
     gl.linkProgram(program);
