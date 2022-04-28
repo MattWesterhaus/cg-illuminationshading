@@ -128,17 +128,17 @@ class GlApp {
 
         //
         // TODO: set texture parameters and upload a temporary 1px white RGBA array [255,255,255,255]
+        // Done
         // 
         
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        let pixels=[255, 255, 255, 255];
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(pixels)); 
-        //gl.bindTexture(gl.TEXTURE_2D, null);
-        return texture;
+        this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+        let pixels=[100, 0, 255, 255];
+        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, new Uint8Array(pixels)); 
+        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
 
 
         // download the actual image
@@ -156,7 +156,16 @@ class GlApp {
     updateTexture(texture, image_element) {
         //
         // TODO: update image for specified texture
-        //
+
+        this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image_element);
+        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+        /*
+        this.gl.activeTexture(texture);
+        this.gl.bindTexture(this.gl.TEXTURE_2D, image_element);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);*/
     }
 
     render() {
@@ -171,12 +180,8 @@ class GlApp {
             // TODO: properly select shader here
             // DONE
             //
-            var selected_shader;
-            if (this.algorithm == "gouraud"){
-                selected_shader = 'gouraud_color';
-            } else if (this.algorithm == "phong") {
-                selected_shader = 'emissive';
-            } 
+            let selected_shader = this.algorithm + "_" + this.scene.models[i].shader;
+            
             this.gl.useProgram(this.shader[selected_shader].program);
 
             // transform model to proper position, size, and orientation
@@ -195,15 +200,25 @@ class GlApp {
             //
             // TODO: bind proper texture and set uniform (if shader is a textured one)
             //
+            // we'll get there when we get there
+            //
             // Select our triangle 'vertex array object' for drawing
 
             this.gl.bindVertexArray(this.vertex_array[this.scene.models[i].type]);
 
-            this.gl.activeTexture(this.gl.TEXTURE0);
-            this.gl.bindTexture(this.gl.TEXTURE_2D, null); //null if none, have if statement for getting texture later
+            if(this.scene.models[i].shader == "texture") {
+                this.gl.activeTexture(this.gl.TEXTURE0); 
+                this.gl.bindTexture(this.gl.TEXTURE_2D, this.scene.models[i].texture.id); //null if none, have if statement for getting texture later
+                this.gl.uniform1i(this.shader[selected_shader].uniforms.image, 0);
+                console.log(this.scene.models[i].texture.id);
+                console.log(this.shader[selected_shader].uniforms.image);
+            }
+
 
             this.gl.drawElements(this.gl.TRIANGLES, this.vertex_array[this.scene.models[i].type].face_index_count, this.gl.UNSIGNED_SHORT, 0);
+            this.gl.bindTexture(this.gl.TEXTURE_2D, null); //null if none, have if statement for getting texture later
             this.gl.bindVertexArray(null);
+            console.log(this.gl.getError());
         }
 
         // draw all light sources
