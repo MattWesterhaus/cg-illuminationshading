@@ -202,10 +202,25 @@ class GlApp {
 
             if(this.scene.models[i].shader == "texture") {
                 this.gl.activeTexture(this.gl.TEXTURE0); 
-                this.gl.bindTexture(this.gl.TEXTURE_2D, this.scene.models[i].texture.id); //null if none, have if statement for getting texture later
+                this.gl.bindTexture(this.gl.TEXTURE_2D, this.scene.models[i].texture.id);
                 this.gl.uniform1i(this.shader[selected_shader].uniforms.image, 0);
                 console.log(this.scene.models[i].texture.id);
                 console.log(this.shader[selected_shader].uniforms.image);
+            }
+            else{
+                /*
+                    uniform vec3 light_ambient;
+                    uniform vec3 light_position;
+                    uniform vec3 light_color;
+                    uniform vec3 camera_position;
+                    uniform float material_shininess; // n
+
+                */
+                this.gl.uniform3fv(this.shader['gouraud'].uniforms.light_ambient, this.scene.light.ambient);
+                this.gl.uniform3fv(this.shader['gouraud'].uniforms.light_position, false, this.scene.light.position);
+                this.gl.uniform3fv(this.shader['gouraud'].uniforms.light_color, false, this.scene.light.color);
+                this.gl.uniform3fv(this.shader['gouraud'].uniforms.camera_position, false, this.scene.camera.position);
+                this.gl.uniform1fv(this.shader['gouraud'].uniforms.material_shininess, false, this.scene.models[i].shininess);
             }
 
 
