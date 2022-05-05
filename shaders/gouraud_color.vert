@@ -21,6 +21,8 @@ out vec3 specular;
 void main() {
     vec3 l = (light_position - vertex_position);
     vec3 v = (camera_position - vertex_position);
+    l = nomalize(l);
+    v = nomalize(v);
     float product = dot(vertex_normal, l);
     vec3 reflection = reflect(l, vertex_normal);
     float specular_product = dot(reflection, v);
