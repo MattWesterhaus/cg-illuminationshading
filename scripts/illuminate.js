@@ -202,12 +202,30 @@ class GlApp {
 
             if(this.scene.models[i].shader == "texture") {
                 this.gl.activeTexture(this.gl.TEXTURE0); 
-                this.gl.bindTexture(this.gl.TEXTURE_2D, this.scene.models[i].texture.id); //null if none, have if statement for getting texture later
+                this.gl.bindTexture(this.gl.TEXTURE_2D, this.scene.models[i].texture.id);
                 this.gl.uniform1i(this.shader[selected_shader].uniforms.image, 0);
+                this.gl.uniform2fv(this.shader[selected_shader].uniforms.texture_scale, this.scene.models[i].texture.scale);
                 console.log(this.scene.models[i].texture.id);
                 console.log(this.shader[selected_shader].uniforms.image);
             }
+                /*
+                    uniform vec3 light_ambient;
+                    uniform vec3 light_position;
+                    uniform vec3 light_color;
+                    uniform vec3 camera_position;
+                    uniform float material_shininess; // n
+                */
+                this.gl.uniformMatrix3fv(this.shader[selected_shader].uniforms.light_ambient, false, this.scene.light.ambient);
+                this.gl.uniform3fv(this.shader[selected_shader].uniforms.camera_position, this.scene.camera.position);
+                this.gl.uniform1i(this.shader[selected_shader].uniforms.material_shininess, this.scene.models[i].material.shininess);
+               
+                for(let j=0; j < this.scene.light.point_lights.length; j++){
+                    this.gl.uniform3fv(this.shader[selected_shader].uniforms.light_position, this.scene.light.point_lights[j].position);
+                    this.gl.uniform3fv(this.shader[selected_shader].uniforms.light_color, this.scene.light.point_lights[j].color);
+                }
+                
 
+                
 
             this.gl.drawElements(this.gl.TRIANGLES, this.vertex_array[this.scene.models[i].type].face_index_count, this.gl.UNSIGNED_SHORT, 0);
             this.gl.bindTexture(this.gl.TEXTURE_2D, null); //null if none, have if statement for getting texture later
