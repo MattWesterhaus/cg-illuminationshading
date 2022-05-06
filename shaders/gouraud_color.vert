@@ -19,11 +19,12 @@ out vec3 diffuse;
 out vec3 specular;
 
 void main() {
+    
     vec3 world = vec3(model_matrix * vec4(vertex_position,1.0));
     vec3 l = normalize(light_position - world);
     vec3 v = normalize(camera_position - world);
   
-    vec3 normal = normalize(mat3(model_matrix) * vertex_normal);
+    vec3 normal = normalize(mat3(transpose(inverse(model_matrix))) * vertex_normal);
     float product = max(dot(normal, l), 0.0);
     vec3 reflection = reflect(-l, normal);
     float specular_product = max(dot(reflection, v), 0.0);
