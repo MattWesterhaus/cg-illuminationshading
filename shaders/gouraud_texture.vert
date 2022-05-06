@@ -22,7 +22,17 @@ out vec3 specular;
 out vec2 frag_texcoord;
 
 void main() {
-    gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
+    vec3 l = (light_position - vertex_position);
+    vec3 v = (camera_position - vertex_position);
+  
+    float product = dot(vertex_normal, l);
+    vec3 reflection = reflect(l, vertex_normal);
+    float specular_product = dot(reflection, v);
+    
+    ambient = light_ambient;
+    //diffuse = light_position * product;
+    //specular = light_position * pow(specular_product, material_shininess);
     frag_texcoord = vertex_texcoord * texture_scale;
     //frag_texcoord = vertex_texcoord;
+    gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
 }
