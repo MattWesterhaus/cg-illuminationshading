@@ -19,16 +19,18 @@ out vec3 diffuse;
 out vec3 specular;
 
 void main() {
-    vec3 l = normalize(light_position - vertex_position);
-    vec3 v = normalize(camera_position - vertex_position);
+    vec3 world = vec3(model_matrix * vec4(vertex_position,1.0));
+    vec3 l = normalize(light_position - world);
+    vec3 v = normalize(camera_position - world);
   
-    float product = dot(vertex_normal, l);
-    vec3 reflection = reflect(l, vertex_normal);
-    float specular_product = dot(reflection, v);
+    vec3 normal = normalize(mat3(model_matrix) * vertex_normal);
+    float product = max(dot(normal, l), 0.0);
+    vec3 reflection = reflect(-l, normal);
+    float specular_product = max(dot(reflection, v), 0.0);
     
     ambient = light_ambient;
-    diffuse = light_position * product;
-    //specular = light_position * normalize(pow(specular_product, material_shininess));
+    diffuse = light_color * product;
+    specular = light_color * pow(specular_product, material_shininess);
     gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
 }
 
