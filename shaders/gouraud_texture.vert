@@ -40,7 +40,6 @@ void main() {
 
     
     frag_texcoord = vertex_texcoord * texture_scale;
-    //frag_texcoord = vertex_texcoord;
     
 }
 
