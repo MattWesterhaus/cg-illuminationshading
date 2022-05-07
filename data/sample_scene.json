@@ -35,17 +35,6 @@
             },
             "center": [0.0, 1.0, -3.0],
             "size": [2.0, 2.0, 2.0]
-        },
-        {
-            "type": "custom",
-            "shader": "color",
-            "material": {
-                "color": [0.392, 0.176, 0.569],
-                "specular": [1.0, 1.0, 1.0],
-                "shininess": 4
-            },
-            "center": [2.0, 1.5, 1.0],
-            "size": [1.0, 1.0, 1.0]
         }
     ],
     "light": {

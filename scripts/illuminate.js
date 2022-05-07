@@ -31,6 +31,7 @@ class GlApp {
             plane: null,                             // of the model - vertices, normals, faces, ...)
             cube: null,
             sphere: null,
+            pyramid: null,
             custom: null
         };
 
@@ -101,6 +102,9 @@ class GlApp {
                                                                 this.vertex_normal_attrib,
                                                                 this.vertex_texcoord_attrib);
         this.vertex_array.sphere = createSphereVertexArray(this.gl, this.vertex_position_attrib, 
+                                                                    this.vertex_normal_attrib,
+                                                                    this.vertex_texcoord_attrib);
+        this.vertex_array.pyramid = createPyramidVertexArray(this.gl, this.vertex_position_attrib, 
                                                                     this.vertex_normal_attrib,
                                                                     this.vertex_texcoord_attrib);
         this.vertex_array.custom = createCustomVertexArray(this.gl, this.vertex_position_attrib, 

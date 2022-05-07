@@ -34,8 +34,94 @@ function init() {
                             specular: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
                             shininess: 32
                         },
-                        center: vec3.fromValues(0.0, 1.0, -6.0), // x, y, z
+                        center: vec3.fromValues(3.0, 1.0, -6.0), // x, y, z
                         size: vec3.fromValues(2.0, 2.0, 2.0),  // width, height, depth
+                        rotate_x: 0,
+                        rotate_y: 0,
+                        rotate_z: 0
+                    },
+                    {
+                        type: 'cube',
+                        shader: 'color',
+                        material: {
+                            color: vec3.fromValues(0.75, 0.1, 0.9),  // red, green, blue
+                            specular: vec3.fromValues(0.0, 0.0, 0.0),  // red, green, blue
+                            shininess: 1
+                        },
+                        center: vec3.fromValues(-2.0, 1.0, -6.0),  // x, y, z
+                        size: vec3.fromValues(1.0, 1.0, 1.0),  // width, 1.0, depth
+                        rotate_x: 0,
+                        rotate_y: 0,
+                        rotate_z: 0
+                    },
+                    {
+                        type: 'pyramid', //short square
+                        shader: 'texture',
+                        material: {
+                            color: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
+                            specular: vec3.fromValues(0.0, 0.0, 0.0),  // red, green, blue
+                            shininess: 1
+                        },
+                        texture: {
+                            url: "images/Roof.jpg",
+                            scale: vec2.fromValues(2.0, 2.0),
+                        },
+                        center: vec3.fromValues(0.5, 1.3, -4.0),  // x, y, z
+                        size: vec3.fromValues(1.0, 0.5, 1.0),  // width, 1.0, depth
+                        rotate_x: 0,
+                        rotate_y: 0,
+                        rotate_z: 0
+                    },
+                    {
+                        type: 'pyramid',//tall square
+                        shader: 'texture',
+                        material: {
+                            color: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
+                            specular: vec3.fromValues(0.0, 0.0, 0.0),  // red, green, blue
+                            shininess: 1
+                        },
+                        texture: {
+                            url: "images/Roof.jpg",
+                            scale: vec2.fromValues(2.0, 2.0),
+                        },
+                        center: vec3.fromValues(-.5, 2, -4.0),  // x, y, z
+                        size: vec3.fromValues(-1.0, 1.0, 1.0),  // width, 1.0, depth
+                        rotate_x: 0,
+                        rotate_y: 0,
+                        rotate_z: 0
+                    },
+                    {
+                        type: 'custom',
+                        shader: 'texture',
+                        material: {
+                            color: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
+                            specular: vec3.fromValues(0.0, 0.0, 0.0),  // red, green, blue
+                            shininess: 1
+                        },
+                        texture: {
+                            url: "images/Wall.jpg",
+                            scale: vec2.fromValues(1.0, 1.0),
+                        },
+                        center: vec3.fromValues(-0.5, 1.0, -4.0),  // x, y, z
+                        size: vec3.fromValues(1.0, 1.0, 1.0),  // width, 1.0, depth
+                        rotate_x: 0,
+                        rotate_y: 0,
+                        rotate_z: 0
+                    }, 
+                    {
+                        type: 'cube',
+                        shader: 'texture',
+                        material: {
+                            color: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
+                            specular: vec3.fromValues(0.0, 0.0, 0.0),  // red, green, blue
+                            shininess: 1
+                        },
+                        texture: {
+                            url: "images/decrepitDoor.jpg",
+                            scale: vec2.fromValues(1.0, 1.0),
+                        },
+                        center: vec3.fromValues(0.0, 0.8, -4.0),  // x, y, z
+                        size: vec3.fromValues(2.002, 0.6, 0.999),  // width, 1.0, depth
                         rotate_x: 0,
                         rotate_y: 0,
                         rotate_z: 0

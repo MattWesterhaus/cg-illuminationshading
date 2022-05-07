@@ -19,19 +19,19 @@ out vec3 diffuse;
 out vec3 specular;
 
 void main() {
-    
-    vec3 world = vec3(model_matrix * vec4(vertex_position,1.0));
-    vec3 l = normalize(light_position - world);
-    vec3 v = normalize(camera_position - world);
-  
-    vec3 normal = normalize(mat3(transpose(inverse(model_matrix))) * vertex_normal);
-    float product = max(dot(normal, l), 0.0);
-    vec3 reflection = reflect(-l, normal);
-    float specular_product = max(dot(reflection, v), 0.0);
-    
-    ambient = light_ambient;
-    diffuse = light_color * product;
-    specular = light_color * pow(specular_product, material_shininess);
-    gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
+    //for(int i = 0; i < 10; i++){
+        vec3 world = vec3(model_matrix * vec4(vertex_position,1.0));
+        vec3 l = normalize(light_position - world);
+        vec3 v = normalize(camera_position - world);
+        vec3 normal = normalize(mat3(transpose(inverse(model_matrix))) * vertex_normal);
+        float product = max(dot(normal, l), 0.0);
+        vec3 reflection = reflect(-l, normal);
+        float specular_product = max(dot(reflection, v), 0.0);
+        
+        ambient = light_ambient;
+        diffuse = light_color * product;
+        specular = light_color * pow(specular_product, material_shininess);
+        gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
+    //}
 }
 
